@@ -1,0 +1,53 @@
+package com.example.demo.service;
+
+import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+public class JasperService {
+
+    private static final String JASPER_PATH = "classpath:jasper/";
+    private static final String JASPER_PREFIX = "ondas";
+    private static final String JASPER_SUFFIX = ".jasper";
+
+    private final Connection connection;
+
+    private Map<String, Object> params = new HashMap<>();
+
+    public void addParam(String key, Object value) {
+        this.params.put(key, value);
+    }
+
+    public byte[] exportPDF(Long id, Double time) {
+        byte[] bytes = null;
+
+        try {
+            File file = ResourceUtils.getFile(JASPER_PATH.concat(JASPER_PREFIX).concat(JASPER_SUFFIX));
+            addParam("PARAM_ONDA_ID", id);
+            addParam("PARAM_TEMPO", time);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(file.getAbsolutePath(), params, connection);
+
+            bytes = JasperExportManager.exportReportToPdf(jasperPrint);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Arquivo Jasper não encontrado: " + e.getMessage(), e);
+        } catch (JRException e) {
+            throw new RuntimeException("Erro ao preencher ou exportar o relatório: " + e.getMessage(), e);
+        }
+
+        return bytes;
+    }
+}

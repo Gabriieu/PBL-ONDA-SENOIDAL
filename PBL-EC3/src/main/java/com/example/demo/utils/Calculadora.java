@@ -18,7 +18,7 @@ public class Calculadora {
 
         while (x <= lambda + 0.01) {
             double milisegundo = 0.00;
-            while (milisegundo < duracao) {
+            while (milisegundo < duracao + 0.005) {
                 Ponto ponto = new Ponto();
                 Double y = Math.sin(2 * PI * (frequencia * milisegundo - x / lambda));
                 ponto.setX(x);

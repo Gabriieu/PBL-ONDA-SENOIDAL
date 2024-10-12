@@ -58,6 +58,14 @@ public class WaveController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @GetMapping("/{id}/print")
+    public ResponseEntity<WaveResponseDTO> getWavePdf(@PathVariable Long id) {
+        // IMPLEMENTAR GERAÇÃO DE PDF COM JASPERSOFT
+        Wave wave = waveService.findById(id);
+        WaveResponseDTO responseDto = new WaveResponseDTO(wave);
+        return ResponseEntity.ok(responseDto);
+    }
+
     @GetMapping
     public ResponseEntity<List<WaveResponseDTO>> getWaves() {
         List<Wave> ondas = waveService.findAll();
