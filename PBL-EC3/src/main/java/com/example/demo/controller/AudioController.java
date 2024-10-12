@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
@@ -29,9 +32,9 @@ public class AudioController {
 
         float sampleRate = 44100f; // Taxa de amostragem
         int duration = wave.getDuracao(); // Duração em segundos
-        byte[] soundData = generateSineWave(sampleRate, duration, wave.getFrequencia()); // 440Hz (Lá)
+        byte[] soundData = generateSineWave(sampleRate, duration, wave.getFrequencia());
 
-        // Criar arquivo .wav em memória
+
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             AudioFormat format = new AudioFormat(sampleRate, 16, 1, true, false);
             AudioInputStream audioInputStream = new AudioInputStream(
@@ -45,7 +48,7 @@ public class AudioController {
             byte[] wavData = byteArrayOutputStream.toByteArray();
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=simulacao_id_" + wave.getId() +".wav");
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=simulacao_id_" + wave.getId() + ".wav");
             return new ResponseEntity<>(wavData, headers, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,7 +57,7 @@ public class AudioController {
 
     private byte[] generateSineWave(float sampleRate, int duration, double frequency) {
         int totalSamples = (int) (duration * sampleRate);
-        byte[] soundData = new byte[totalSamples * 2]; // 16 bits = 2 bytes
+        byte[] soundData = new byte[totalSamples * 2];
 
         for (int i = 0; i < totalSamples; i++) {
             double angle = 2.0 * Math.PI * i / (sampleRate / frequency);
