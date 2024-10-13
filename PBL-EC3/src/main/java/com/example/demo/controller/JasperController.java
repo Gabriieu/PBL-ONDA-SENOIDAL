@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Wave;
 import com.example.demo.service.JasperService;
+import com.example.demo.service.WaveService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -17,9 +19,16 @@ import java.io.IOException;
 public class JasperController {
 
     private final JasperService jasperService;
+    private final WaveService waveService;
 
     @GetMapping
     public void getPDF(@RequestParam Long id, @RequestParam Double time, HttpServletResponse response) throws IOException {
+        Wave wave = waveService.findById(id);
+
+        if (time > wave.getDuracao()) {
+            response.sendError(400, "O tempo deve ser menor ou igual a duração da onda");
+            return;
+        }
 
         // Multiplicando por 100 para trabalhar com inteiros
         int scaledTime = (int) Math.round(time * 100);
