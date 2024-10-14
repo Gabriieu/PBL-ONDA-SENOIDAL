@@ -3,7 +3,6 @@ package com.example.demo.utils;
 import com.example.demo.entity.Ponto;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class Calculadora {
                 response.add(ponto);
                 milisegundo += 0.05;
             }
-            x += lambda / 10;
+            x += lambda / 20;
             System.out.println(x);
         }
         return response;
