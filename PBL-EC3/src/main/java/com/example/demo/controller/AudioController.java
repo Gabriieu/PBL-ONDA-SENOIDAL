@@ -20,8 +20,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @RestController
+// Define a classe como um controller REST
 @RequestMapping("/audio")
+// Define a rota base para a API
 @RequiredArgsConstructor
+// Gera um construtor com todas as dependências
 public class AudioController {
 
     private final WaveService waveService;

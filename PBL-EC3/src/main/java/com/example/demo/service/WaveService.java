@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.WaveUpdateDTO;
 import com.example.demo.entity.Wave;
 import com.example.demo.repository.WaveRepository;
 import jakarta.transaction.Transactional;
@@ -9,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Define a classe como um serviço
 @Service
+// Gera um construtor com todas as dependências
 @RequiredArgsConstructor
 public class WaveService {
 
+    // Injeção de dependências
     private final WaveRepository waveRepository;
 
     @Transactional
@@ -26,13 +28,6 @@ public class WaveService {
 
     public List<Wave> findAll() {
         return waveRepository.findAll();
-    }
-
-    @Transactional
-    public Wave updateWave(Long id, WaveUpdateDTO wave) {
-        Wave waveToUpdate = findById(id);
-        waveToUpdate.update(wave);
-        return waveRepository.save(waveToUpdate);
     }
 
     public void  deleteWave(Long id) {

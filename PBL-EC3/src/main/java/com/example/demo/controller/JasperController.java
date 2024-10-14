@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
+// Define a classe como um controller REST
 @RequestMapping("/report/print")
+// Define a rota base para a API
 @RequiredArgsConstructor
+// Gera um construtor com todas as dependências
 public class JasperController {
 
+    // Injeção de dependências
     private final JasperService jasperService;
     private final WaveService waveService;
 

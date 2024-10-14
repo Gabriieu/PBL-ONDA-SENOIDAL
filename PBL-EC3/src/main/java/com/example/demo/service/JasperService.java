@@ -14,22 +14,29 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+// Serviço que gera relatórios Jasper
 @Service
+// Gera um construtor com todas as dependências
 @RequiredArgsConstructor
 public class JasperService {
 
+    // Diretório onde o arquivo Jasper está localizados
     private static final String JASPER_PATH = "classpath:jasper/";
     private static final String JASPER_PREFIX = "ondas";
     private static final String JASPER_SUFFIX = ".jasper";
 
+    // Conexão com o banco de dados
     private final Connection connection;
 
+    // Parâmetros do relatório Jasper
     private Map<String, Object> params = new HashMap<>();
 
+    // Adiciona um parâmetro ao relatório Jasper
     public void addParam(String key, Object value) {
         this.params.put(key, value);
     }
 
+    // Gerar um relatório Jasper em PDF
     public byte[] exportPDF(Long id, Double time) {
         byte[] bytes = null;
 
@@ -48,6 +55,7 @@ public class JasperService {
             throw new RuntimeException("Erro ao preencher ou exportar o relatório: " + e.getMessage(), e);
         }
 
+        // Retorna o relatório em um array de bytes
         return bytes;
     }
 }

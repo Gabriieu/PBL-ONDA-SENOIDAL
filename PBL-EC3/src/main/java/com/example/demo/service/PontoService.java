@@ -6,12 +6,16 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+// Classe de serviço para salvar um ponto
 @Service
+// Gera um construtor com todas as dependências
 @RequiredArgsConstructor
 public class PontoService {
 
+    // Injeção de dependências do repositório de pontos
     private final PontoRepository pontoRepository;
 
+    // Salva um ponto
     @Transactional
     public Ponto save(Ponto ponto) {
         return pontoRepository.save(ponto);

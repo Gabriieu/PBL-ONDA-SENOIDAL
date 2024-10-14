@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.WaveCreateDTO;
 import com.example.demo.dto.WaveResponseDTO;
-import com.example.demo.dto.WaveUpdateDTO;
 import com.example.demo.entity.Ponto;
 import com.example.demo.entity.Wave;
 import com.example.demo.service.PontoService;
@@ -13,10 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+// Define a classe como um controller REST
 @RestController
+// Define a rota base para a API
 @RequestMapping("/onda")
+// Gera um construtor com todas as dependências
 @RequiredArgsConstructor
 public class WaveController {
 
@@ -72,11 +75,6 @@ public class WaveController {
         List<Wave> ondas = waveService.findAll();
         List<WaveResponseDTO> responseDtos = ondas.stream().map(WaveResponseDTO::new).toList();
         return ResponseEntity.ok(responseDtos);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<WaveResponseDTO> updateWave(@PathVariable Long id, @RequestBody @Valid WaveUpdateDTO dto) {
-        return ResponseEntity.ok(new WaveResponseDTO(waveService.updateWave(id, dto)));
     }
 
     @DeleteMapping("/{id}")
