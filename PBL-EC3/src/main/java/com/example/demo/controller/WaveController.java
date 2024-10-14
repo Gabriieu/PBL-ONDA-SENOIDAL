@@ -20,11 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WaveController {
 
+    // Injeção de dependências
     private final WaveService waveService;
     private final PontoService pontoService;
     private final Calculadora calculadora;
 
-
+    // Métodos da API
     @PostMapping()
     public ResponseEntity<WaveResponseDTO> create(@RequestBody @Valid WaveCreateDTO dto) {
         Wave wave = new Wave(dto);

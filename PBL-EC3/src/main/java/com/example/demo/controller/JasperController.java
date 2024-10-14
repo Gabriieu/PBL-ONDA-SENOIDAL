@@ -23,8 +23,10 @@ public class JasperController {
 
     @GetMapping
     public void getPDF(@RequestParam Long id, @RequestParam Double time, HttpServletResponse response) throws IOException {
+        // Buscando a onda pelo id
         Wave wave = waveService.findById(id);
 
+        // O tempo solicitado não pode ser maior que a duração da onda
         if (time > wave.getDuracao()) {
             response.sendError(400, "O tempo deve ser menor ou igual a duração da onda");
             return;
@@ -39,8 +41,10 @@ public class JasperController {
             return;
         }
 
+        // Exportando o relatório em PDF
         byte[] bytes = jasperService.exportPDF(id, time);
 
+        // Configurando a resposta
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);
         response.setHeader("Content-Disposition", "inline; filename=report.pdf");
         response.setContentLength(bytes.length);

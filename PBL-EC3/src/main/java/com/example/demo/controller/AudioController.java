@@ -28,13 +28,15 @@ public class AudioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> generateWav(@PathVariable Long id) {
+        // Buscando a onda pelo id
         Wave wave = waveService.findById(id);
 
+        // Configurando a onda
         float sampleRate = 44100f; // Taxa de amostragem
         int duration = wave.getDuracao(); // Duração em segundos
         byte[] soundData = generateSineWave(sampleRate, duration, wave.getFrequencia());
 
-
+        // Gerando o arquivo WAV
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             AudioFormat format = new AudioFormat(sampleRate, 16, 1, true, false);
             AudioInputStream audioInputStream = new AudioInputStream(
@@ -43,10 +45,13 @@ public class AudioController {
                     soundData.length / format.getFrameSize()
             );
 
+            // Escrevendo o arquivo WAV
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, byteArrayOutputStream);
 
+            // Retornando o arquivo WAV
             byte[] wavData = byteArrayOutputStream.toByteArray();
 
+            // Configurando a resposta
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=simulacao_id_" + wave.getId() + ".wav");
             return new ResponseEntity<>(wavData, headers, HttpStatus.OK);
@@ -55,6 +60,7 @@ public class AudioController {
         }
     }
 
+    // Método para gerar uma onda senoidal
     private byte[] generateSineWave(float sampleRate, int duration, double frequency) {
         int totalSamples = (int) (duration * sampleRate);
         byte[] soundData = new byte[totalSamples * 2];
