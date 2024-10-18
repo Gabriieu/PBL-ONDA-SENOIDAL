@@ -1,15 +1,20 @@
 package com.example.demo.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class OpenAIService {
 
     @Value("${openai.api.url}")
@@ -23,22 +28,25 @@ public class OpenAIService {
 
     private final RestTemplate restTemplate;
 
-    public OpenAIService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
     public String getCompletion(String prompt) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.set("Content-Type", "application/json");
 
         // Corpo da requisição
+        List<Map<String, String>> messages = new ArrayList<>();
+        Map<String, String> userMessage = new HashMap<>();
+        Map<String, String> teacherMessage = new HashMap<>();
+        teacherMessage.put("role", "system");
+        teacherMessage.put("content", "Você é um professor de física");
+        messages.add(teacherMessage);
+        userMessage.put("role", "user");
+        userMessage.put("content", prompt);
+        messages.add(userMessage);
+
         Map<String, Object> body = new HashMap<>();
-        body.put("model", "gpt-4o-mini"); // Utilize o modelo mais recente compatível
-        body.put("messages", new Object[]{new HashMap<String, String>() {{
-            put("role", "user");
-            put("content", prompt);
-        }}});
+        body.put("model", "gpt-4o"); // Utilize o modelo mais recente compatível
+        body.put("messages", messages);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
@@ -48,34 +56,39 @@ public class OpenAIService {
             if (response.getStatusCode() == HttpStatus.OK) {
                 Map<String, Object> responseBody = response.getBody();
                 if (responseBody != null && responseBody.containsKey("choices")) {
-                    // "choices" é uma lista de mapas
                     List<Map<String, Object>> choices = (List<Map<String, Object>>) responseBody.get("choices");
 
-                    // Pegue o primeiro item da lista "choices"
-                    Map<String, Object> firstChoice = choices.get(0);
-                    Map<String, Object> message = (Map<String, Object>) firstChoice.get("message");
+                    if (!choices.isEmpty()) {
+                        Map<String, Object> firstChoice = choices.get(0);
+                        Map<String, Object> message = (Map<String, Object>) firstChoice.get("message");
 
-                    // Retorna o conteúdo da resposta
-                    return (String) message.get("content");
+                        if (message != null && message.containsKey("content")) {
+                            return (String) message.get("content");
+                        }
+                    }
                 }
             }
+        } catch (HttpClientErrorException e) {
+            System.err.println("Erro de cliente: " + e.getResponseBodyAsString());
+        } catch (HttpServerErrorException e) {
+            System.err.println("Erro de servidor: " + e.getResponseBodyAsString());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         return "Erro ao obter resposta da OpenAI.";
     }
 
+
     public byte[] getTextToSpeech(String text) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + apiKey); // Insira sua chave de API aqui
+        headers.set("Authorization", "Bearer " + apiKey);
         headers.set("Content-Type", "application/json");
 
         // Corpo da requisição
         Map<String, Object> body = new HashMap<>();
-        body.put("model", "tts-1"); // O texto a ser convertido em áudio
-        body.put("input", text);
+        body.put("model", "tts-1"); // Modelo de texto para fala
+        body.put("input", text); // O texto a ser convertido em áudio
         body.put("voice", "alloy"); // A voz a ser usada para a conversão
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
