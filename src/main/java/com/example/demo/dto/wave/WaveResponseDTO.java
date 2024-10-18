@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.wave;
 
 import com.example.demo.entity.Wave;
 import com.fasterxml.jackson.annotation.JsonProperty;

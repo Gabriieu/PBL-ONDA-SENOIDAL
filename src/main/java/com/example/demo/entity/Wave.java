@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.example.demo.dto.WaveCreateDTO;
+import com.example.demo.dto.wave.WaveCreateDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -11,7 +11,7 @@ public class ExcelLauncher implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Usar ClassPathResource para obter o arquivo do classpath
+        // ClassPathResource para obter o arquivo do classpath
         File file = new ClassPathResource("excel/Dashboard.xlsm").getFile();
         String filePath = file.getAbsolutePath();
 

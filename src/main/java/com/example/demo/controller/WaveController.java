@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.WaveCreateDTO;
-import com.example.demo.dto.WaveResponseDTO;
+import com.example.demo.dto.wave.WaveCreateDTO;
+import com.example.demo.dto.wave.WaveResponseDTO;
 import com.example.demo.entity.Ponto;
 import com.example.demo.entity.Wave;
 import com.example.demo.service.PontoService;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 // Define a classe como um controller REST

@@ -1,15 +1,15 @@
-package com.example.demo.dto;
+package com.example.demo.dto.wave;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
 // DTO (Data Transfer Object) para a criação de uma onda
 public record WaveCreateDTO(
-        @DecimalMin(value = "0.009", message = "Frequência deve ser maior que 0.009")
+        @DecimalMin(value = "0.01", message = "Frequência deve ser maior que 0.01")
         Double frequencia,
 
         @JsonProperty("comprimento_onda")
-        @DecimalMin(value = "0.20", message = "Comprimento de onda deve ser maior que 0.2")
+        @DecimalMin(value = "0.01", message = "Comprimento de onda deve ser maior que 0.01")
         Double comprimentoOnda,
 
         @Min(value = 1, message = "Segundos deve ser maior ou igual 1")
