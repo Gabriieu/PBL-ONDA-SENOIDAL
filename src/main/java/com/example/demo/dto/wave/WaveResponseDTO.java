@@ -20,9 +20,7 @@ public record WaveResponseDTO(
         @JsonProperty("erro_max")
         Double erroMax,
         @JsonProperty("data_criacao")
-        Date data,
-        @JsonProperty("data_atualizacao")
-        Date dataAtualizacao
+        Date data
 ) {
     public WaveResponseDTO(Wave wave) {
         this(
@@ -33,8 +31,7 @@ public record WaveResponseDTO(
                 wave.getComprimentoOnda(),
                 wave.getDuracao(),
                 wave.getErroMax(),
-                wave.getData(),
-                wave.getDataAtualizacao()
+                wave.getData()
         );
     }
 }

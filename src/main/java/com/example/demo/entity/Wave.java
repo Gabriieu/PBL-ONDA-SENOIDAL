@@ -42,9 +42,6 @@ public class Wave {
     @CreationTimestamp
     private Date data;
 
-    @UpdateTimestamp
-    private Date dataAtualizacao;
-
     public Wave(WaveCreateDTO dto) {
         this.frequencia = dto.frequencia();
         this.comprimentoOnda = dto.comprimentoOnda();
