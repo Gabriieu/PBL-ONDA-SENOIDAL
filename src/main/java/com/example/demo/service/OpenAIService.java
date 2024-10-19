@@ -38,7 +38,7 @@ public class OpenAIService {
         Map<String, String> userMessage = new HashMap<>();
         Map<String, String> teacherMessage = new HashMap<>();
         teacherMessage.put("role", "system");
-        teacherMessage.put("content", "Você é um professor de física");
+        teacherMessage.put("content", "Você é um professor de física com doutorado no estudo de propagação de ondas. Você está respondendo a pergunta de um aluno sobre dados de uma onda que está salva em um banco de dados.");
         messages.add(teacherMessage);
         userMessage.put("role", "user");
         userMessage.put("content", prompt);

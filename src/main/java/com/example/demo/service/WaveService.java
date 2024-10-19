@@ -14,12 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WaveService {
 
-    // Injeção de dependências
+    // Injeção de dependência
     private final WaveRepository waveRepository;
 
     @Transactional
-    public Wave save(Wave wave) {
-        return waveRepository.save(wave);
+    public Long save(Wave wave) {
+        return waveRepository.SP_INSERE_SIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
     }
 
     public Wave findById(Long id) {

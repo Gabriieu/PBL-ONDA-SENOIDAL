@@ -27,43 +27,28 @@ public class WaveController {
     private final PontoService pontoService;
     private final Calculadora calculadora;
 
-    // Métodos da API
-    @PostMapping()
-    public ResponseEntity<WaveResponseDTO> create(@RequestBody @Valid WaveCreateDTO dto) {
+    @PostMapping
+    public ResponseEntity<Long> create(@RequestBody @Valid WaveCreateDTO dto) {
         Wave wave = new Wave(dto);
-        waveService.save(wave);
+
+        // Salva a simulação e obtém o ID gerado
+        Long simulacaoId = waveService.save(wave);
+
+        // Definir o ID no objeto wave
+        wave.setId(simulacaoId);
+
+        // Calcula e salva os pontos associados à simulação
         List<Ponto> pontos = calculadora.calculaY(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao());
         for (Ponto ponto : pontos) {
             ponto.setWave(wave);
             pontoService.save(ponto);
         }
 
-        return ResponseEntity.ok(new WaveResponseDTO(wave));
-    }
-
-    @PostMapping("/vba")
-    public ResponseEntity<Long> createVBA(@RequestBody @Valid WaveCreateDTO dto) {
-        Wave wave = new Wave(dto);
-        waveService.save(wave);
-        List<Ponto> pontos = calculadora.calculaY(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao());
-        for (Ponto ponto : pontos) {
-            ponto.setWave(wave);
-            pontoService.save(ponto);
-        }
-
-        return ResponseEntity.ok(wave.getId());
+        return ResponseEntity.ok(simulacaoId);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WaveResponseDTO> getWave(@PathVariable Long id) {
-        Wave wave = waveService.findById(id);
-        WaveResponseDTO responseDto = new WaveResponseDTO(wave);
-        return ResponseEntity.ok(responseDto);
-    }
-
-    @GetMapping("/{id}/print")
-    public ResponseEntity<WaveResponseDTO> getWavePdf(@PathVariable Long id) {
-        // IMPLEMENTAR GERAÇÃO DE PDF COM JASPERSOFT
         Wave wave = waveService.findById(id);
         WaveResponseDTO responseDto = new WaveResponseDTO(wave);
         return ResponseEntity.ok(responseDto);

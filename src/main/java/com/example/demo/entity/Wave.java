@@ -49,8 +49,6 @@ public class Wave {
         this.frequencia = dto.frequencia();
         this.comprimentoOnda = dto.comprimentoOnda();
         this.duracao = dto.segundos();
-        this.velocidade = BigDecimal.valueOf(dto.frequencia() * dto.comprimentoOnda()).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.periodo = BigDecimal.valueOf(1 / dto.frequencia()).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.erroMax = dto.erroMax();
     }
 }

@@ -16,8 +16,7 @@ public class PontoService {
     private final PontoRepository pontoRepository;
 
     // Salva um ponto
-    @Transactional
-    public Ponto save(Ponto ponto) {
-        return pontoRepository.save(ponto);
+    public void save(Ponto ponto) {
+        pontoRepository.SP_INSERE_PONTO(ponto.getWave().getId(), ponto.getX(), ponto.getY(), ponto.getT());
     }
 }
