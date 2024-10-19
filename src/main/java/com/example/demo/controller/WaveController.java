@@ -7,6 +7,7 @@ import com.example.demo.entity.Wave;
 import com.example.demo.service.PontoService;
 import com.example.demo.service.WaveService;
 import com.example.demo.utils.Calculadora;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class WaveController {
     private final Calculadora calculadora;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<Long> create(@RequestBody @Valid WaveCreateDTO dto) {
         Wave wave = new Wave(dto);
 

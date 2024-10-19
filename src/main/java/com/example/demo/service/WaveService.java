@@ -17,7 +17,6 @@ public class WaveService {
     // Injeção de dependência
     private final WaveRepository waveRepository;
 
-    @Transactional
     public Long save(Wave wave) {
         return waveRepository.SP_INSERE_SIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
     }
