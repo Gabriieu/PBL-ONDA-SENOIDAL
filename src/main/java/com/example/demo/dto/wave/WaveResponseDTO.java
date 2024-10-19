@@ -11,8 +11,8 @@ import java.util.Date;
 @JsonPropertyOrder({"id", "frequencia", "comprimentoOnda", "segundos", "erroMax", "data"})
 public record WaveResponseDTO(
         Long id,
-        BigDecimal velocidade,
-        BigDecimal periodo,
+        Double velocidade,
+        Double periodo,
         Double frequencia,
         @JsonProperty("comprimento_onda")
         Double comprimentoOnda,

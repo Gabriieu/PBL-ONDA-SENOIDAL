@@ -33,9 +33,9 @@ public class Wave {
 
     private int duracao;
 
-    private BigDecimal velocidade;
+    private Double velocidade;
 
-    private BigDecimal periodo;
+    private Double periodo;
 
     private Double erroMax;
 
