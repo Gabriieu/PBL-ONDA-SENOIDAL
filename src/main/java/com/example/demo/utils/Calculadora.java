@@ -33,4 +33,48 @@ public class Calculadora {
     }
 
     //taylor
+    public double taylor(double teta, double erroMax) {
+        double PI = Math.PI;
+        int k = 0;  // Iterações
+        double r = 1;  // Resto
+        double seno = 0;  // Valor final do seno
+        boolean negativo = false;  // Indica se o termo na série é negativo
+
+        // Ajusta o valor de teta para estar no intervalo [-pi, pi]
+        while (teta >= PI || teta <= -PI) {
+            if (teta >= PI) {
+                teta -= PI;
+            }
+            if (teta <= -PI) {
+                teta += PI;
+            }
+        }
+
+        // Calcula a Série de Taylor até que o erro seja menor que o erroMax
+        while (r > erroMax) {
+            if (k % 2 == 0) {
+                seno += 0 * Math.pow(teta, k);
+            } else if (k % 2 != 0.0 && !negativo) {  // Verifica se o termo é ímpar e positivo
+                seno += (1.0 / fatorial(k)) * Math.pow(teta, k);
+                negativo = true;  // Próximo termo será negativo
+            } else if (k % 2 != 0.0 && negativo) {  // Verifica se o termo é ímpar e negativo
+                seno -= (1.0 / fatorial(k)) * Math.pow(teta, k);
+                negativo = false;  // Próximo termo será positivo
+            }
+
+            // Calcula o valor do resto
+            r = Math.pow(Math.abs(teta), k + 1) / fatorial(k + 1);
+            k++;
+        }
+
+        return seno;
+    }
+
+    // Função para calcular o fatorial
+    private static double fatorial(int k) {
+        if (k == 0) {
+            return 1;
+        }
+        return k * fatorial(k - 1);
+    }
 }

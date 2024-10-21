@@ -56,6 +56,11 @@ public class WaveController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @GetMapping("/teste")
+    public ResponseEntity<Double> teste(@RequestParam Double x, @RequestParam Double erroMax){
+        return ResponseEntity.ok(calculadora.taylor(x, erroMax));
+    }
+
     @GetMapping
     public ResponseEntity<List<WaveResponseDTO>> getWaves() {
         List<Wave> ondas = waveService.findAll();
