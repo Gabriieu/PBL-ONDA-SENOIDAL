@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Ponto;
 import com.example.demo.repository.PontoRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,6 @@ public class PontoService {
 
     // Salva um ponto
     public void save(Ponto ponto) {
-        pontoRepository.SP_INSERE_PONTO(ponto.getWave().getId(), ponto.getX(), ponto.getY(), ponto.getT());
+        pontoRepository.SPINSEREPONTO(ponto.getWave().getId(), ponto.getX(), ponto.getY(), ponto.getT());
     }
 }

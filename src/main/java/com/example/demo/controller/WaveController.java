@@ -40,7 +40,7 @@ public class WaveController {
         wave.setId(simulacaoId);
 
         // Calcula e salva os pontos associados à simulação
-        List<Ponto> pontos = calculadora.calculaY(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao());
+        List<Ponto> pontos = calculadora.calculaY(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
         for (Ponto ponto : pontos) {
             ponto.setWave(wave);
             pontoService.save(ponto);
@@ -54,11 +54,6 @@ public class WaveController {
         Wave wave = waveService.findById(id);
         WaveResponseDTO responseDto = new WaveResponseDTO(wave);
         return ResponseEntity.ok(responseDto);
-    }
-
-    @GetMapping("/teste")
-    public ResponseEntity<Double> teste(@RequestParam Double x, @RequestParam Double erroMax){
-        return ResponseEntity.ok(calculadora.taylor(x, erroMax));
     }
 
     @GetMapping

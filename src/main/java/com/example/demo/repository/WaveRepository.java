@@ -9,5 +9,5 @@ public interface WaveRepository extends JpaRepository<Wave, Long> {
 
     //  Inserção de uma simulação via procedure
     @Procedure
-    Long SP_INSERE_SIMULACAO(Double frequencia, Double comprimentoOnda, Integer duracao, Double erroMax);
+    Long SPINSERESIMULACAO(Double frequencia, Double comprimentoOnda, Integer duracao, Double erroMax);
 }

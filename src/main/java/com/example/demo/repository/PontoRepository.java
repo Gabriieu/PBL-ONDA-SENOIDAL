@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.query.Procedure;
 public interface PontoRepository extends JpaRepository<Ponto, Long> {
 
     @Procedure
-    void SP_INSERE_PONTO(Long waveId, Double x, Double y, Double t);
+    void SPINSEREPONTO(Long waveId, Double x, Double y, Double t);
 }

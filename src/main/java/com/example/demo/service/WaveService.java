@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Wave;
 import com.example.demo.repository.WaveRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ public class WaveService {
     private final WaveRepository waveRepository;
 
     public Long save(Wave wave) {
-        return waveRepository.SP_INSERE_SIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
+        return waveRepository.SPINSERESIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
     }
 
     public Wave findById(Long id) {
