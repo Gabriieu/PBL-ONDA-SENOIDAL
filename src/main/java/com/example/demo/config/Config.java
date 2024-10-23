@@ -25,6 +25,7 @@ public class Config {
         return dataSource.getConnection();
     }
 
+    // Método que cria um bean de RestTemplate para realizar requisições HTTP e desabilitar a verificação de certificados SSL para requisições à API Open AI
     @Bean
     public RestTemplate restTemplate() throws Exception {
         // Cria um TrustManager que não valida os certificados
