@@ -40,7 +40,7 @@ public class WaveController {
         wave.setId(simulacaoId);
 
         // Calcula e salva os pontos associados à simulação
-        List<Ponto> pontos = calculadora.calculaY(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
+        List<Ponto> pontos = calculadora.calculaY(wave);
         for (Ponto ponto : pontos) {
             ponto.setWave(wave);
             pontoService.save(ponto);
