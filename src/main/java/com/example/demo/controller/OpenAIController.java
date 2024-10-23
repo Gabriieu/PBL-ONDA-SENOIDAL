@@ -12,11 +12,6 @@ public class OpenAIController {
 
     private final OpenAIService openAIService;
 
-    @GetMapping("/ask")
-    public String askQuestion(@RequestBody String question) {
-        return openAIService.getCompletion(question);
-    }
-
     @PostMapping("/text-to-speech")
     public ResponseEntity<byte[]> textToSpeech(@RequestBody String text) {
         var responseText = openAIService.getCompletion(text);
