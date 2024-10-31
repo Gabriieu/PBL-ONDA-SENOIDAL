@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Wave;
 import com.example.demo.repository.WaveRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,22 @@ public class WaveService {
         return waveRepository.SPINSERESIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
     }
 
+    @Transactional
     public Wave findById(Long id) {
-        return waveRepository.findById(id).orElseThrow(() -> new RuntimeException("Onda não encontrada"));
+        Wave response = waveRepository.SPOBTEMSIMULACAO(id);
+
+        if(response != null){
+            return  response;
+        }
+
+        throw new RuntimeException(String.format("Onda %d não encontrada", id));
     }
 
     public List<Wave> findAll() {
         return waveRepository.findAll();
     }
 
+    @Transactional
     public void  deleteWave(Long id) {
         Wave wave = findById(id);
         waveRepository.delete(wave);
