@@ -26,17 +26,22 @@ public class Wave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+
+    @Column(nullable = false)
     private Double frequencia;
 
+    @Column(nullable = false)
     private Double comprimentoOnda;
 
+    @Column(nullable = false)
     private int duracao;
 
     private Double velocidade;
 
     private Double periodo;
 
+    @Column(nullable = false)
     private Double erroMax;
 
     @CreationTimestamp

@@ -22,10 +22,15 @@ public class Ponto {
     private Long id;
 
     // Coordenada x do ponto
+    @Column(nullable = false)
     private Double x;
+
     // Coordenada y do ponto
+    @Column(nullable = false)
     private Double y;
+
     // Tempo do ponto
+    @Column(nullable = false)
     private Double t;
 
     // Onda a qual o ponto pertence
