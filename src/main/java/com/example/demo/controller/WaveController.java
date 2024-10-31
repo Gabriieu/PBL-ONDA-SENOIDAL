@@ -10,6 +10,7 @@ import com.example.demo.utils.Calculadora;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +47,7 @@ public class WaveController {
             pontoService.save(ponto);
         }
 
-        return ResponseEntity.ok(simulacaoId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(simulacaoId);
     }
 
     @GetMapping("/{id}")
