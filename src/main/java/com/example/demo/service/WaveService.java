@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Wave;
+import com.example.demo.exception.exceptions.EntityNotFoundException;
 import com.example.demo.repository.WaveRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class WaveService {
             return  response;
         }
 
-        throw new RuntimeException(String.format("Onda %d não encontrada", id));
+        throw new EntityNotFoundException(String.format("Onda %d não encontrada", id));
     }
 
     public List<Wave> findAll() {
