@@ -1,0 +1,11 @@
+CREATE OR ALTER PROCEDURE SPOBTEMSIMULACAO(
+	@id int
+) AS
+BEGIN
+	SELECT
+		*
+	FROM
+		simulacoes s
+	WHERE
+		s.id = @id
+END
