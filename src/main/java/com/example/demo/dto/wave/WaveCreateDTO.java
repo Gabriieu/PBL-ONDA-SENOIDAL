@@ -6,10 +6,12 @@ import jakarta.validation.constraints.*;
 // DTO (Data Transfer Object) para a criação de uma onda
 public record WaveCreateDTO(
         @DecimalMin(value = "0.01", message = "Frequência deve ser maior que 0.01")
+        @DecimalMax(value = "30000.00", message = "Frequência deve ser menor que 30000.00")
         Double frequencia,
 
         @JsonProperty("comprimento_onda")
         @DecimalMin(value = "0.01", message = "Comprimento de onda deve ser maior que 0.01")
+        @DecimalMax(value = "10.00", message = "Comprimento de onda deve ser menor que 10.00")
         Double comprimentoOnda,
 
         @Min(value = 1, message = "Segundos deve ser maior ou igual 1")
@@ -17,7 +19,7 @@ public record WaveCreateDTO(
         int segundos,
 
         @JsonProperty("erro_max")
-        @DecimalMin(value = "0.00000000001", message = "Erro máximo deve ser maior que 0.00000000001")
+        @DecimalMin(value = "0.000000000001", message = "Erro máximo deve ser maior que 0.000000000001")
         @NotNull(message = "Erro máximo não pode ser nulo")
         Double erroMax
 ) {
