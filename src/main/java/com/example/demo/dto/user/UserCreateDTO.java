@@ -10,6 +10,9 @@ public record UserCreateDTO(
         @JsonProperty("email")
         String username,
         @NotBlank
+        @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters long")
+        String name,
+        @NotBlank
         @Size(min = 6, message = "Password must be at least 6 characters long")
         String password
 ) {
