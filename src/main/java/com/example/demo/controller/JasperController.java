@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Wave;
+import com.example.demo.exception.exceptions.PDFRequestErrorException;
 import com.example.demo.service.JasperService;
 import com.example.demo.service.WaveService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +33,12 @@ public class JasperController {
 
         // O tempo solicitado não pode ser maior que a duração da onda
         if (time > wave.getDuracao()) {
-            response.sendError(400, "O tempo deve ser menor ou igual a duração da onda");
-            return;
+            throw new PDFRequestErrorException("O tempo deve ser menor ou igual a duração da onda");
+        }
+
+        // O tempo solicitado não pode ser menor que 0
+        if(time < 0){
+            throw new PDFRequestErrorException("O tempo deve ser maior ou igual a 0");
         }
 
         // Multiplicando por 100 para trabalhar com inteiros
@@ -41,8 +46,7 @@ public class JasperController {
 
         // Verificando se o valor é múltiplo de 5 (0.05 * 100 = 5)
         if (scaledTime % 5 != 0) {
-            response.sendError(400, "O tempo deve ser múltiplo de 0.05");
-            return;
+            throw new PDFRequestErrorException("O tempo deve ser múltiplo de 0.05");
         }
 
         // Exportando o relatório em PDF

@@ -19,7 +19,7 @@ public class WaveService {
     private final WaveRepository waveRepository;
 
     public Long save(Wave wave) {
-        return waveRepository.SPINSERESIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax());
+        return waveRepository.SPINSERESIMULACAO(wave.getFrequencia(), wave.getComprimentoOnda(), wave.getDuracao(), wave.getErroMax(), wave.getUser().getId());
     }
 
     @Transactional
