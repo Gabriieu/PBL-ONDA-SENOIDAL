@@ -61,6 +61,12 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
     }
 
+    @Transactional
+    public void updateName(Long id, String newName) {
+        User user = findById(id);
+        user.setName(newName);
+    }
+
     @Transactional(readOnly = true)
     public Page<User> findAll(Pageable page) {
         return userRepository.findAll(page);

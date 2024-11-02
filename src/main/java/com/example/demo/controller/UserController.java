@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.user.UserCreateDTO;
 import com.example.demo.dto.user.UserResponseDTO;
+import com.example.demo.dto.user.UserUpdateNameDTO;
 import com.example.demo.dto.user.UserUpdatePasswordDTO;
 import com.example.demo.entity.User;
+import com.example.demo.jwt.JwtUserDetails;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,14 +48,34 @@ public class UserController {
         return ResponseEntity.ok(new UserResponseDTO(user));
     }
 
-    @PatchMapping("/{id}")
-    @PreAuthorize("#id == principal.id")
+    @GetMapping("/info")
+    public ResponseEntity<String> getNameByEmailVBA(@AuthenticationPrincipal JwtUserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        String funcao;
+        if (user.getRole().equals(User.Role.ROLE_ADMIN)) {
+            funcao = "Administrador";
+        } else {
+            funcao = "Usuário";
+        }
+        return ResponseEntity.ok(String.format("%s; %s; %s", user.getName(), user.getUsername(), funcao));
+    }
+
+    @PatchMapping("/password")
     public ResponseEntity<Void> updatePassword(@RequestBody @Valid UserUpdatePasswordDTO data,
-                                               @PathVariable Long id) {
-        userService.updatePassword(id,
+                                               @AuthenticationPrincipal JwtUserDetails userDetails) {
+        userService.updatePassword(userDetails.getId(),
                 data.currentPassword(),
                 data.newPassword(),
                 data.confirmPassword());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/name")
+    public ResponseEntity<Void> updateName(@RequestBody @Valid UserUpdateNameDTO data,
+                                           @AuthenticationPrincipal JwtUserDetails userDetails) {
+        userService.updateName(userDetails.getId(), data.name());
 
         return ResponseEntity.noContent().build();
     }

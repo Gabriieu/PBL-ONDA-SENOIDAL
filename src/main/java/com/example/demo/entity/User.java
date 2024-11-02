@@ -25,6 +25,7 @@ public class User implements Serializable {
     @Setter
     @Column(nullable = false, length = 200)
     private String password;
+    @Setter
     @Column(nullable = false, length = 50)
     private String name;
     @Enumerated(EnumType.STRING)
