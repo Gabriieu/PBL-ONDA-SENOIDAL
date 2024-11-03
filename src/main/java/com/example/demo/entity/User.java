@@ -3,14 +3,11 @@ package com.example.demo.entity;
 import com.example.demo.dto.user.UserCreateDTO;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usuarios")
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
