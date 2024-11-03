@@ -4,7 +4,6 @@ import com.example.demo.entity.Wave;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 // DTO (Data Transfer Object) para a resposta de uma onda
