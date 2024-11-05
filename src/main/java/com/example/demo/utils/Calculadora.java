@@ -27,7 +27,7 @@ public class Calculadora {
                 response.add(ponto);
                 milisegundo += 0.05;
             }
-            x += wave.getComprimentoOnda() / 20;
+            x += wave.getComprimentoOnda() / 40;
         }
         return response;
     }
