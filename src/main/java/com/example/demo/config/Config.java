@@ -48,7 +48,8 @@ public class Config {
                         .requestMatchers(
                                 antMatcher(HttpMethod.POST, "/users"),
                                 antMatcher(HttpMethod.POST, "/auth/login/**"),
-                                antMatcher(HttpMethod.GET, "/onda/**")
+                                antMatcher(HttpMethod.GET, "/onda/**"),
+                                antMatcher(HttpMethod.GET, "/dashboard/download")
                         ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(
