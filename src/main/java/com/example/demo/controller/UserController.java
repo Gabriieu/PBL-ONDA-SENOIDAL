@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<String> getNameByEmailVBA(@AuthenticationPrincipal JwtUserDetails userDetails) {
+    public ResponseEntity<String> getUserInfoVBA(@AuthenticationPrincipal JwtUserDetails userDetails) {
         User user = userService.findByUsername(userDetails.getUsername());
 
         String funcao;
@@ -77,6 +77,12 @@ public class UserController {
                                            @AuthenticationPrincipal JwtUserDetails userDetails) {
         userService.updateName(userDetails.getId(), data.name());
 
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestParam String password,@AuthenticationPrincipal JwtUserDetails userDetails) {
+        userService.delete(userDetails.getId(), password);
         return ResponseEntity.noContent().build();
     }
 }

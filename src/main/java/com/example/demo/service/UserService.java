@@ -71,4 +71,15 @@ public class UserService {
     public Page<User> findAll(Pageable page) {
         return userRepository.findAll(page);
     }
+
+    @Transactional
+    public void delete(Long id, String password) {
+        boolean passwordMatch = passwordEncoder.matches(password, findById(id).getPassword());
+
+        if(!passwordMatch) {
+            throw new InvalidPasswordException("Senha inválida");
+        }
+
+        userRepository.deleteById(id);
+    }
 }
