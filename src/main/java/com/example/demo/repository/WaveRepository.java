@@ -13,4 +13,6 @@ public interface WaveRepository extends JpaRepository<Wave, Long> {
 
     @Procedure
     Wave SPOBTEMSIMULACAO(Long id);
+
+    Long countByUserId(Long userId);
 }

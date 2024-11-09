@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.User;
 import com.example.demo.entity.Wave;
 import com.example.demo.exception.exceptions.PDFRequestErrorException;
+import com.example.demo.jwt.JwtUserDetails;
 import com.example.demo.service.JasperService;
+import com.example.demo.service.UserService;
 import com.example.demo.service.WaveService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,9 +29,10 @@ public class JasperController {
     // Injeção de dependências
     private final JasperService jasperService;
     private final WaveService waveService;
+    private final UserService userService;
 
     @GetMapping
-    public void getPDF(@RequestParam Long id, @RequestParam Double time, HttpServletResponse response) throws IOException {
+    public void getWavePDF(@RequestParam Long id, @RequestParam Double time, HttpServletResponse response) throws IOException {
         // Buscando a onda pelo id
         Wave wave = waveService.findById(id);
 
@@ -50,7 +55,28 @@ public class JasperController {
         }
 
         // Exportando o relatório em PDF
-        byte[] bytes = jasperService.exportPDF(id, time);
+        byte[] bytes = jasperService.exportWavePDF(id, time);
+
+        // Configurando a resposta
+        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+        response.setHeader("Content-Disposition", "inline; filename=report.pdf");
+        response.setContentLength(bytes.length);
+        response.getOutputStream().write(bytes);
+    }
+
+    @GetMapping("/user")
+    public void getUserWaves(@AuthenticationPrincipal JwtUserDetails userDetails, HttpServletResponse response) throws IOException {
+        // Buscando o usuário logado pelo id
+        User user = userService.findById(userDetails.getId());
+        Long wavesCount = waveService.countByUserId(user.getId());
+
+        // O usuário deve ter pelo menos uma onda
+        if (wavesCount == 0) {
+            throw new PDFRequestErrorException("O usuário não possui simulações");
+        }
+
+        // Exportando o relatório em PDF
+        byte[] bytes = jasperService.exportUserWavesPDF(user.getId());
 
         // Configurando a resposta
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);

@@ -42,4 +42,8 @@ public class WaveService {
         Wave wave = findById(id);
         waveRepository.delete(wave);
     }
+
+    public Long countByUserId(Long userId) {
+        return waveRepository.countByUserId(userId);
+    }
 }
