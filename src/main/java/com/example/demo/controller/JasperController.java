@@ -11,6 +11,7 @@ import com.example.demo.service.WaveService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,13 +88,10 @@ public class JasperController {
     }
 
     @GetMapping("/user/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public void getUsers(@AuthenticationPrincipal JwtUserDetails userDetails, HttpServletResponse response) throws IOException {
         // Buscando o usuário logado pelo id
         User user = userService.findById(userDetails.getId());
-
-        if(!user.getRole().equals(User.Role.ROLE_ADMIN)){
-            throw new UnauthorizedException("Acesso negado");
-        }
 
         // Exportando o relatório em PDF
         byte[] bytes = jasperService.listUsersPDF(user.getId());
