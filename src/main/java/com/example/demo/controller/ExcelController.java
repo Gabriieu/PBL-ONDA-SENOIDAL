@@ -22,7 +22,7 @@ public class ExcelController {
     @GetMapping("/download")
     public ResponseEntity<Resource> baixarPlanilha() throws IOException {
         Resource resource = new ClassPathResource(PLANILHA_PATH);
-        System.out.println(PLANILHA_PATH);
+
         if (!resource.exists()) {
             return ResponseEntity.notFound().build();
         }
