@@ -64,7 +64,7 @@ public class UserService {
     @Transactional
     public void updateName(Long id, String newName) {
         User user = findById(id);
-        user.setName(newName);
+        user.setName(newName.toUpperCase());
     }
 
     @Transactional(readOnly = true)
