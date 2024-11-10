@@ -26,10 +26,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserCreateDTO user) {
-        User userEntity = userService.save(new User(user));
+    public ResponseEntity<Void> createVBA(@RequestBody @Valid UserCreateDTO user) {
+        userService.save(new User(user));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponseDTO(userEntity));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping

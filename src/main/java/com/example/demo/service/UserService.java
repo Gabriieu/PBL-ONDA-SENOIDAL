@@ -21,10 +21,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User save(User user) {
+    public void save(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userRepository.save(user);
+            userRepository.SPINSEREUSUARIO(user.getName(), user.getPassword(), user.getRole().name(), user.getUsername());
         } catch (
                 DataIntegrityViolationException exception) {
             throw new UsernameUniqueViolationException("Email já cadastrado");
