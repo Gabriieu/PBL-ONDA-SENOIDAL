@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.entity.Wave;
 import com.example.demo.exception.exceptions.PDFRequestErrorException;
+import com.example.demo.exception.exceptions.UnauthorizedException;
 import com.example.demo.jwt.JwtUserDetails;
 import com.example.demo.service.JasperService;
 import com.example.demo.service.UserService;
@@ -85,4 +86,22 @@ public class JasperController {
         response.getOutputStream().write(bytes);
     }
 
+    @GetMapping("/user/all")
+    public void getUsers(@AuthenticationPrincipal JwtUserDetails userDetails, HttpServletResponse response) throws IOException {
+        // Buscando o usuário logado pelo id
+        User user = userService.findById(userDetails.getId());
+
+        if(!user.getRole().equals(User.Role.ROLE_ADMIN)){
+            throw new UnauthorizedException("Acesso negado");
+        }
+
+        // Exportando o relatório em PDF
+        byte[] bytes = jasperService.listUsersPDF(user.getId());
+
+        // Configurando a resposta
+        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+        response.setHeader("Content-Disposition", "inline; filename=report.pdf");
+        response.setContentLength(bytes.length);
+        response.getOutputStream().write(bytes);
+    }
 }
