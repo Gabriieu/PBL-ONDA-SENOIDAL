@@ -11,7 +11,7 @@ public record WaveCreateDTO(
 
         @JsonProperty("comprimento_onda")
         @DecimalMin(value = "0.01", message = "Comprimento de onda deve ser maior que 0.01 m")
-        @DecimalMax(value = "10.00", message = "Comprimento de onda deve ser menor que 10.00 m")
+        @DecimalMax(value = "20.00", message = "Comprimento de onda deve ser menor que 20.00 m")
         Double comprimentoOnda,
 
         @Min(value = 1, message = "Segundos deve ser maior ou igual 1 s")
