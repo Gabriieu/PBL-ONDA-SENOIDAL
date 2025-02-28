@@ -52,8 +52,6 @@ Para rodar o projeto localmente:
 Após inicializar a API, o console exibirá um link para download de uma planilha, que servirá como interface de interação com o sistema. Para utilizar todas as funcionalidades, é necessário criar um usuário e realizar login.
 
 
-## Endpoints da API
-
 # Endpoints da API
 
 ## Usuários
