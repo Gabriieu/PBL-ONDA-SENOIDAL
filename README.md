@@ -5,8 +5,6 @@ Projeto interdisciplinar desenvolvido como parte do curso de Engenharia de Compu
 ## Índice
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Instalação](#instalação)
-- [Como Usar](#como-usar)
 - [Endpoints da API](#endpoints-da-api)
 
 ## Sobre o Projeto
@@ -35,21 +33,6 @@ O objetivo deste projeto é desenvolver um sistema para simulação de ondas sen
    - JasperReports (jasperreports, jasperreports-chart-customizers)
    - Lombok
 
-## Instalação
-
-Para rodar o projeto localmente:
-
-1. Clone o repositório:
-   ```sh
-   git clone https://github.com/Gabriieu/PBL-ONDA-SENOIDAL.git
-   ```
-2. Crie um banco de dados SQL Server e configure as credenciais no arquivo `application.properties`.
-3. Execute o arquivo `start.bat`.
-4. Após a inicialização, todas as tabelas serão criadas automaticamente. Execute as procedures e triggers dentro do banco e, opcionalmente, popule as tabelas. Os arquivos necessários estão em `src\main\resources\SQL`.
-
-## Como Usar
-
-Após inicializar a API, o console exibirá um link para download de uma planilha, que servirá como interface de interação com o sistema. Para utilizar todas as funcionalidades, é necessário criar um usuário e realizar login.
 
 
 # Endpoints da API
