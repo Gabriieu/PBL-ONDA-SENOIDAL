@@ -54,6 +54,8 @@ Após inicializar a API, o console exibirá um link para download de uma planilh
 
 # Endpoints da API
 
+URL base: `http://localhost:8080`
+
 ## Usuários
 | Ação               | Endpoint          | Método HTTP | Descrição                           |
 |--------------------|------------------|------------|-----------------------------------|
